@@ -6,13 +6,7 @@ import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import { getMovieDetails } from '@/lib/tmdb'
 import { getPosterUrl, getBackdropUrl, formatRating, formatRuntime, getYear } from '@/lib/tmdb'
-
-interface MoviePageProps {
-  params: Promise<{
-    id: string
-    locale: string
-  }>
-}
+import { MoviePageProps } from '@/types/page'
 
 async function MovieDetailsPage({ params }: MoviePageProps) {
   const t = await getTranslations()

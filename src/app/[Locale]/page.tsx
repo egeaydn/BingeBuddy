@@ -4,10 +4,11 @@ import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
 import MovieList from '@/components/MovieList'
 import { getPopularMovies, getNowPlayingMovies, getTopRatedMovies } from '@/lib/tmdb'
+import { PageProps } from '@/types/page'
 
-async function HomePage({ params }: { params: { locale: string } }) {
+async function HomePage({ params }: PageProps) {
   const t = await getTranslations()
-  const { locale } = params
+  const { locale } = await params
   
   try {
     // API çağrılarını paralel olarak yap
@@ -110,7 +111,7 @@ function LoadingPage() {
   )
 }
 
-export default function Home({ params }: { params: { locale: string } }) {
+export default function Home({ params }: { params: Promise<{ locale: string }> }) {
   return (
     <Suspense fallback={<LoadingPage />}>
       <HomePage params={params} />

@@ -2,8 +2,10 @@ import { Suspense } from 'react'
 import Navigation from '@/components/Navigation'
 import MovieCard from '@/components/MovieCard'
 import { getTopRatedMovies } from '@/lib/tmdb'
+import { PageProps } from '@/types/page'
 
-async function TopRatedMoviesPage() {
+async function TopRatedMoviesPage({ params }: PageProps) {
+  const { locale } = await params
   try {
     const response = await getTopRatedMovies(1)
     const movies = response.results
@@ -50,10 +52,10 @@ function LoadingTopRatedPage() {
   )
 }
 
-export default function TopRatedPage() {
+export default function TopRatedPage({ params }: PageProps) {
   return (
     <Suspense fallback={<LoadingTopRatedPage />}>
-      <TopRatedMoviesPage />
+      <TopRatedMoviesPage params={params} />
     </Suspense>
   )
 }

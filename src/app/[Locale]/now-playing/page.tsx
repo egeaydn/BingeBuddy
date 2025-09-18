@@ -2,8 +2,10 @@ import { Suspense } from 'react'
 import Navigation from '@/components/Navigation'
 import MovieCard from '@/components/MovieCard'
 import { getNowPlayingMovies } from '@/lib/tmdb'
+import { PageProps } from '@/types/page'
 
-async function NowPlayingMoviesPage() {
+async function NowPlayingMoviesPage({ params }: PageProps) {
+  const { locale } = await params
   try {
     const response = await getNowPlayingMovies(1)
     const movies = response.results
@@ -50,10 +52,10 @@ function LoadingNowPlayingPage() {
   )
 }
 
-export default function NowPlayingPage() {
+export default function NowPlayingPage({ params }: PageProps) {
   return (
     <Suspense fallback={<LoadingNowPlayingPage />}>
-      <NowPlayingMoviesPage />
+      <NowPlayingMoviesPage params={params} />
     </Suspense>
   )
 }
