@@ -1,3 +1,6 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import { Movie } from '@/types/movie'
 import MovieCard from './MovieCard'
 
@@ -16,6 +19,19 @@ export default function MovieList({
   showViewAll = false, 
   viewAllLink 
 }: MovieListProps) {
+  // Safely get translations with fallback
+  let t: any
+  try {
+    t = useTranslations()
+  } catch (error) {
+    // Fallback when not in intl context
+    t = (key: string) => {
+      const fallbacks: Record<string, string> = {
+        'navigation.viewAll': 'Tümünü Gör'
+      }
+      return fallbacks[key] || key
+    }
+  }
   return (
     <section className="mb-12">
       <div className="flex items-center justify-between mb-6">
@@ -25,7 +41,7 @@ export default function MovieList({
             href={viewAllLink}
             className="text-red-400 hover:text-red-300 font-medium transition-colors flex items-center space-x-1"
           >
-            <span>Tümünü Gör</span>
+            <span>{t('navigation.viewAll')}</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

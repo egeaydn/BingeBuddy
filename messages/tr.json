@@ -7,5 +7,38 @@
   "homepageLoadError": "Ana sayfa yüklenemedi:",
   "sorryErrorOccurred": "Üzgünüz, bir hata oluştu",
   "movieDataLoadError": "Film verileri yüklenirken bir sorun yaşandı.",
-  "tryAgain": "Tekrar Dene"
+  "tryAgain": "Tekrar Dene",
+  "navigation": {
+    "home": "Ana Sayfa",
+    "popular": "Popüler",
+    "nowPlaying": "Vizyonda",
+    "topRated": "En İyi",
+    "searchPlaceholder": "Film ara...",
+    "viewAll": "Tümünü Gör"
+  },
+  "hero": {
+    "viewDetails": "Detayları Görüntüle",
+    "addToList": "Listeme Ekle"
+  },
+  "movieDetail": {
+    "votes": "oy",
+    "genres": "Türler",
+    "overview": "Konu",
+    "noOverview": "Bu film için açıklama bulunmamaktadır.",
+    "watchTrailer": "Trailer İzle",
+    "addToList": "Listeme Ekle",
+    "share": "Paylaş",
+    "productionInfo": "Yapım Bilgileri",
+    "status": "Durum:",
+    "originalLanguage": "Orijinal Dil:",
+    "budget": "Bütçe:",
+    "revenue": "Hasılat:",
+    "unknown": "Bilinmiyor",
+    "productionCompanies": "Yapım Şirketleri",
+    "productionCountries": "Yapım Ülkeleri",
+    "backToHome": "Ana Sayfaya Dön",
+    "loadError": "Film detayları yüklenemedi:",
+    "notFound": "Film bulunamadı",
+    "notFoundMessage": "Aradığınız film mevcut değil veya bir hata oluştu."
+  }
 }

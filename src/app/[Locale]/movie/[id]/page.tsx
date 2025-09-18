@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 import Link from 'next/link'
 import Navigation from '@/components/Navigation'
@@ -9,13 +10,17 @@ import { getPosterUrl, getBackdropUrl, formatRating, formatRuntime, getYear } fr
 interface MoviePageProps {
   params: Promise<{
     id: string
+    locale: string
   }>
 }
 
 async function MovieDetailsPage({ params }: MoviePageProps) {
+  const t = await getTranslations()
+  
   try {
     const resolvedParams = await params
-    const movieId = parseInt(resolvedParams.id)
+    const { id, locale } = resolvedParams
+    const movieId = parseInt(id)
     
     if (isNaN(movieId)) {
       notFound()
@@ -77,7 +82,7 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                         <span className="font-semibold">{formatRating(movie.vote_average)}</span>
-                        <span className="text-gray-400">({movie.vote_count} oy)</span>
+                        <span className="text-gray-400">({movie.vote_count} {t('movieDetail.votes')})</span>
                       </div>
                     </div>
                   </div>
@@ -85,7 +90,7 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
                   {/* Genres */}
                   {movie.genres && movie.genres.length > 0 && (
                     <div>
-                      <h3 className="text-lg font-semibold mb-2">Türler</h3>
+                      <h3 className="text-lg font-semibold mb-2">{t('movieDetail.genres')}</h3>
                       <div className="flex flex-wrap gap-2">
                         {movie.genres.map((genre) => (
                           <span
@@ -101,9 +106,9 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
 
                   {/* Overview */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Konu</h3>
+                    <h3 className="text-lg font-semibold mb-2">{t('movieDetail.overview')}</h3>
                     <p className="text-gray-300 leading-relaxed">
-                      {movie.overview || 'Bu film için açıklama bulunmamaktadır.'}
+                      {movie.overview || t('movieDetail.noOverview')}
                     </p>
                   </div>
 
@@ -113,21 +118,21 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
                       <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                       </svg>
-                      Trailer İzle
+                      {t('movieDetail.watchTrailer')}
                     </button>
                     
                     <button className="inline-flex items-center justify-center px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors duration-200">
                       <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
-                      Listeme Ekle
+                      {t('movieDetail.addToList')}
                     </button>
 
                     <button className="inline-flex items-center justify-center px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors duration-200">
                       <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                       </svg>
-                      Paylaş
+                      {t('movieDetail.share')}
                     </button>
                   </div>
                 </div>
@@ -138,21 +143,21 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
             <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-white">
               {/* Production Info */}
               <div>
-                <h3 className="text-lg font-semibold mb-4">Yapım Bilgileri</h3>
+                <h3 className="text-lg font-semibold mb-4">{t('movieDetail.productionInfo')}</h3>
                 <div className="space-y-2 text-gray-300">
                   <div>
-                    <span className="font-medium">Durum:</span> {movie.status}
+                    <span className="font-medium">{t('movieDetail.status')}</span> {movie.status}
                   </div>
                   <div>
-                    <span className="font-medium">Orijinal Dil:</span> {movie.original_language.toUpperCase()}
+                    <span className="font-medium">{t('movieDetail.originalLanguage')}</span> {movie.original_language.toUpperCase()}
                   </div>
                   <div>
-                    <span className="font-medium">Bütçe:</span> 
-                    {movie.budget > 0 ? ` $${movie.budget.toLocaleString()}` : ' Bilinmiyor'}
+                    <span className="font-medium">{t('movieDetail.budget')}</span> 
+                    {movie.budget > 0 ? ` $${movie.budget.toLocaleString()}` : ` ${t('movieDetail.unknown')}`}
                   </div>
                   <div>
-                    <span className="font-medium">Hasılat:</span> 
-                    {movie.revenue > 0 ? ` $${movie.revenue.toLocaleString()}` : ' Bilinmiyor'}
+                    <span className="font-medium">{t('movieDetail.revenue')}</span> 
+                    {movie.revenue > 0 ? ` $${movie.revenue.toLocaleString()}` : ` ${t('movieDetail.unknown')}`}
                   </div>
                 </div>
               </div>
@@ -160,7 +165,7 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
               {/* Production Companies */}
               {movie.production_companies && movie.production_companies.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">Yapım Şirketleri</h3>
+                  <h3 className="text-lg font-semibold mb-4">{t('movieDetail.productionCompanies')}</h3>
                   <div className="space-y-2 text-gray-300">
                     {movie.production_companies.slice(0, 5).map((company) => (
                       <div key={company.id}>{company.name}</div>
@@ -172,7 +177,7 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
               {/* Countries */}
               {movie.production_countries && movie.production_countries.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">Yapım Ülkeleri</h3>
+                  <h3 className="text-lg font-semibold mb-4">{t('movieDetail.productionCountries')}</h3>
                   <div className="space-y-2 text-gray-300">
                     {movie.production_countries.map((country) => (
                       <div key={country.iso_3166_1}>{country.name}</div>
@@ -185,13 +190,13 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
             {/* Back Button */}
             <div className="mt-12 pb-12">
               <Link
-                href="/"
+                href={`/${locale}`}
                 className="inline-flex items-center text-red-400 hover:text-red-300 transition-colors"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Ana Sayfaya Dön
+                {t('movieDetail.backToHome')}
               </Link>
             </div>
           </div>
@@ -199,17 +204,19 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
       </div>
     )
   } catch (error) {
-    console.error('Film detayları yüklenemedi:', error)
+    const resolvedParams = await params
+    const { locale } = resolvedParams
+    console.error(t('movieDetail.loadError'), error)
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Film bulunamadı</h1>
-          <p className="text-gray-400 mb-6">Aradığınız film mevcut değil veya bir hata oluştu.</p>
+          <h1 className="text-2xl font-bold text-white mb-4">{t('movieDetail.notFound')}</h1>
+          <p className="text-gray-400 mb-6">{t('movieDetail.notFoundMessage')}</p>
           <Link
-            href="/"
+            href={`/${locale}`}
             className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors"
           >
-            Ana Sayfaya Dön
+            {t('movieDetail.backToHome')}
           </Link>
         </div>
       </div>

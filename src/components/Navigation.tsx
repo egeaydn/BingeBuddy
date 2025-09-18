@@ -2,18 +2,39 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function Navigation() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const router = useRouter()
+  const params = useParams()
+  const locale = params?.locale || 'tr'
+  
+  // Safely get translations with fallback
+  let t: any
+  try {
+    t = useTranslations()
+  } catch (error) {
+    // Fallback when not in intl context
+    t = (key: string) => {
+      const fallbacks: Record<string, string> = {
+        'navigation.home': 'Ana Sayfa',
+        'navigation.popular': 'Popüler',
+        'navigation.nowPlaying': 'Vizyonda',
+        'navigation.topRated': 'En İyi',
+        'navigation.searchPlaceholder': 'Film ara...'
+      }
+      return fallbacks[key] || key
+    }
+  }
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+      router.push(`/${locale}/search?q=${encodeURIComponent(searchQuery.trim())}`)
       setSearchQuery('')
       setIsSearchOpen(false)
     }
@@ -26,7 +47,7 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <Link href="/" className="flex items-center space-x-2">
+              <Link href={`/${locale}`} className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
                   <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
@@ -40,28 +61,28 @@ export default function Navigation() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link
-                  href="/"
+                  href={`/${locale}`}
                   className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
-                  Ana Sayfa
+                  {t('navigation.home')}
                 </Link>
                 <Link
-                  href="/popular"
+                  href={`/${locale}/popular`}
                   className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
-                  Popüler
+                  {t('navigation.popular')}
                 </Link>
                 <Link
-                  href="/now-playing"
+                  href={`/${locale}/now-playing`}
                   className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
-                  Vizyonda
+                  {t('navigation.nowPlaying')}
                 </Link>
                 <Link
-                  href="/top-rated"
+                  href={`/${locale}/top-rated`}
                   className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
-                  En İyi
+                  {t('navigation.topRated')}
                 </Link>
               </div>
             </div>
@@ -76,7 +97,7 @@ export default function Navigation() {
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Film ara..."
+                      placeholder={t('navigation.searchPlaceholder')}
                       className="bg-gray-800 text-white px-4 py-2 rounded-l-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent w-48 md:w-64"
                       autoFocus
                     />
@@ -132,32 +153,32 @@ export default function Navigation() {
         <div className="md:hidden bg-gray-800 border-b border-gray-700">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
-              href="/"
+              href={`/${locale}`}
               className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Ana Sayfa
+              {t('navigation.home')}
             </Link>
             <Link
-              href="/popular"
+              href={`/${locale}/popular`}
               className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Popüler
+              {t('navigation.popular')}
             </Link>
             <Link
-              href="/now-playing"
+              href={`/${locale}/now-playing`}
               className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Vizyonda
+              {t('navigation.nowPlaying')}
             </Link>
             <Link
-              href="/top-rated"
+              href={`/${locale}/top-rated`}
               className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              En İyi
+              {t('navigation.topRated')}
             </Link>
           </div>
         </div>

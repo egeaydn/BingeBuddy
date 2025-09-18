@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Movie } from '@/types/movie'
 import { getBackdropUrl, formatRating, getYear } from '@/lib/tmdb'
 
@@ -13,6 +15,23 @@ interface HeroSectionProps {
 export default function HeroSection({ movies }: HeroSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
+  const params = useParams()
+  const locale = params?.locale || 'tr'
+  
+  // Safely get translations with fallback
+  let t: any
+  try {
+    t = useTranslations()
+  } catch (error) {
+    // Fallback when not in intl context
+    t = (key: string) => {
+      const fallbacks: Record<string, string> = {
+        'hero.viewDetails': 'Detayları Görüntüle',
+        'hero.addToList': 'Listeme Ekle'
+      }
+      return fallbacks[key] || key
+    }
+  }
 
   const featuredMovies = movies.slice(0, 5)
 
@@ -78,20 +97,20 @@ export default function HeroSection({ movies }: HeroSectionProps) {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
-                  href={`/movie/${currentMovie.id}`}
+                  href={`/${locale}/movie/${currentMovie.id}`}
                   className="inline-flex items-center justify-center px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200"
                 >
                   <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                   </svg>
-                  Detayları Görüntüle
+                  {t('hero.viewDetails')}
                 </Link>
                 
                 <button className="inline-flex items-center justify-center px-8 py-3 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors duration-200">
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
-                  Listeme Ekle
+                  {t('hero.addToList')}
                 </button>
               </div>
             </div>

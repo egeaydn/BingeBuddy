@@ -7,5 +7,38 @@
   "homepageLoadError": "Homepage could not be loaded:",
   "sorryErrorOccurred": "Sorry, an error occurred",
   "movieDataLoadError": "A problem occurred while loading movie data.",
-  "tryAgain": "Try Again"
+  "tryAgain": "Try Again",
+  "navigation": {
+    "home": "Home",
+    "popular": "Popular",
+    "nowPlaying": "Now Playing",
+    "topRated": "Top Rated",
+    "searchPlaceholder": "Search movies...",
+    "viewAll": "View All"
+  },
+  "hero": {
+    "viewDetails": "View Details",
+    "addToList": "Add to List"
+  },
+  "movieDetail": {
+    "votes": "votes",
+    "genres": "Genres",
+    "overview": "Overview",
+    "noOverview": "No overview available for this movie.",
+    "watchTrailer": "Watch Trailer",
+    "addToList": "Add to List",
+    "share": "Share",
+    "productionInfo": "Production Info",
+    "status": "Status:",
+    "originalLanguage": "Original Language:",
+    "budget": "Budget:",
+    "revenue": "Revenue:",
+    "unknown": "Unknown",
+    "productionCompanies": "Production Companies",
+    "productionCountries": "Production Countries",
+    "backToHome": "Back to Home",
+    "loadError": "Movie details could not be loaded:",
+    "notFound": "Movie Not Found",
+    "notFoundMessage": "The movie you are looking for does not exist or an error occurred."
+  }
 }

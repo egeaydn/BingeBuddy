@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { Movie } from '@/types/movie'
 import { getPosterUrl, getYear, formatRating } from '@/lib/tmdb'
 
@@ -11,6 +12,9 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({ movie, priority = false, size = 'medium' }: MovieCardProps) {
+  const params = useParams()
+  const locale = params?.locale || 'tr'
+  
   const sizeClasses = {
     small: 'w-36',
     medium: 'w-48',
@@ -26,7 +30,7 @@ export default function MovieCard({ movie, priority = false, size = 'medium' }: 
   const posterUrl = getPosterUrl(movie.poster_path)
   
   return (
-    <Link href={`/movie/${movie.id}`} className="group block">
+    <Link href={`/${locale}/movie/${movie.id}`} className="group block">
       <div className={`${sizeClasses[size]} flex-shrink-0 transform transition-all duration-300 group-hover:scale-105`}>
         {/* Poster */}
         <div className="relative overflow-hidden rounded-lg shadow-lg group-hover:shadow-xl transition-shadow duration-300">
