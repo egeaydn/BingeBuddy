@@ -1,0 +1,11 @@
+{
+  "popularMovies": "Popular Movies",
+  "nowPlayingMovies": "Now Playing",
+  "topRatedMovies": "Top Rated",
+  "footerDescription": "The best place for movie recommendations. From popular movies to classics.",
+  "allRightsReserved": "All rights reserved.",
+  "homepageLoadError": "Homepage could not be loaded:",
+  "sorryErrorOccurred": "Sorry, an error occurred",
+  "movieDataLoadError": "A problem occurred while loading movie data.",
+  "tryAgain": "Try Again"
+}

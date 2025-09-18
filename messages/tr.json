@@ -1,0 +1,11 @@
+{
+  "popularMovies": "Popüler Filmler",
+  "nowPlayingMovies": "Vizyondaki Filmler",
+  "topRatedMovies": "En Yüksek Puanlı",
+  "footerDescription": "En iyi film önerileri için doğru adres. Popüler filmlerden klasiklere kadar.",
+  "allRightsReserved": "Tüm hakları saklıdır.",
+  "homepageLoadError": "Ana sayfa yüklenemedi:",
+  "sorryErrorOccurred": "Üzgünüz, bir hata oluştu",
+  "movieDataLoadError": "Film verileri yüklenirken bir sorun yaşandı.",
+  "tryAgain": "Tekrar Dene"
+}
