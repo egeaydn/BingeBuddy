@@ -33,14 +33,18 @@ export default function MovieCard({ movie, priority = false, size = 'medium' }: 
     <Link href={`/${locale}/movie/${movie.id}`} className="group block">
       <div className={`${sizeClasses[size]} flex-shrink-0 transform transition-all duration-300 group-hover:scale-105`}>
         {/* Poster */}
-        <div className="relative overflow-hidden rounded-lg shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+        <div className="relative overflow-hidden rounded-lg shadow-lg group-hover:shadow-xl transition-shadow duration-300 bg-gray-800">
           <img
             src={posterUrl}
             alt={movie.title}
             width={imageSize[size].width}
             height={imageSize[size].height}
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover rounded-lg"
             loading={priority ? 'eager' : 'lazy'}
+            onError={(e) => {
+              console.error('Image load error:', posterUrl)
+              e.currentTarget.src = '/placeholder-movie.svg'
+            }}
           />
           
           {/* Overlay */}

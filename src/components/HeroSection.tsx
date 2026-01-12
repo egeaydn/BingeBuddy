@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -57,12 +56,11 @@ export default function HeroSection({ movies }: HeroSectionProps) {
     <section className="relative h-screen max-h-[600px] min-h-[400px] overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <Image
+        <img
           src={getBackdropUrl(currentMovie.backdrop_path, 'original')}
           alt={currentMovie.title}
-          fill
-          className={`object-cover transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-70'}`}
-          priority
+          className={`w-full h-full object-cover transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-70'}`}
+          loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />

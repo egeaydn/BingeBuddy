@@ -11,7 +11,6 @@ async function HomePage({ params }: PageProps) {
   const { locale } = await params
   
   try {
-    // API çağrılarını paralel olarak yap
     const [popularResponse, nowPlayingResponse, topRatedResponse] = await Promise.all([
       getPopularMovies(1),
       getNowPlayingMovies(1),
@@ -26,12 +25,9 @@ async function HomePage({ params }: PageProps) {
       <div className="min-h-screen bg-gray-900">
         <Navigation />
         
-        {/* Hero Section */}
         <HeroSection movies={popularMovies} />
         
-        {/* Movie Lists */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-          {/* Popüler Filmler */}
           <MovieList
             title={t('popularMovies')}
             movies={popularMovies}
@@ -40,7 +36,6 @@ async function HomePage({ params }: PageProps) {
             viewAllLink={`/${locale}/popular`}
           />
 
-          {/* Vizyondaki Filmler */}
           <MovieList
             title={t('nowPlayingMovies')}
             movies={nowPlayingMovies}
@@ -48,7 +43,6 @@ async function HomePage({ params }: PageProps) {
             viewAllLink={`/${locale}/now-playing`}
           />
 
-          {/* En Yüksek Puanlı */}
           <MovieList
             title={t('topRatedMovies')}
             movies={topRatedMovies}
@@ -57,7 +51,6 @@ async function HomePage({ params }: PageProps) {
           />
         </div>
 
-        {/* Footer */}
         <footer className="bg-gray-950 border-t border-gray-800 mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="text-center">
@@ -99,7 +92,6 @@ async function HomePage({ params }: PageProps) {
   }
 }
 
-// Loading component
 function LoadingPage() {
   return (
     <div className="min-h-screen bg-gray-900">

@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
-import Image from 'next/image'
 import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import { getMovieDetails } from '@/lib/tmdb'
@@ -28,12 +27,11 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
         
         {/* Backdrop Hero */}
         <div className="relative h-96 md:h-screen max-h-[600px] overflow-hidden">
-          <Image
+          <img
             src={getBackdropUrl(movie.backdrop_path, 'original')}
             alt={movie.title}
-            fill
-            className="object-cover"
-            priority
+            className="w-full h-full object-cover"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
@@ -46,12 +44,11 @@ async function MovieDetailsPage({ params }: MoviePageProps) {
               {/* Poster */}
               <div className="flex-shrink-0">
                 <div className="w-64 mx-auto lg:mx-0">
-                  <Image
+                  <img
                     src={getPosterUrl(movie.poster_path, 'w500')}
                     alt={movie.title}
-                    width={256}
-                    height={384}
                     className="w-full rounded-lg shadow-2xl"
+                    loading="eager"
                   />
                 </div>
               </div>
